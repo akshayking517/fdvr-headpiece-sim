@@ -1,0 +1,876 @@
+<title>5,000 Headpieces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --page:#eef0ee; --panel:#fcfcfb; --panel-2:#f5f6f4;
+  --ink:#1b2124; --ink-2:#4c5659; --ink-3:#7a8487;
+  --rule:#d6dbd9; --rule-soft:#e5e8e6; --grid:#e8ebe9;
+  --control:#1c5cab; --focus:#2a78d6;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --render:#8a9396;
+  --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
+  --good-ink:#0a6e0a; --warn-ink:#8a5a00; --crit-ink:#b02a2a;
+  --good-bg:#e6f4e6; --warn-bg:#fdf1d6; --crit-bg:#fae3e3;
+  --dot-miss:#c6cccb; --dot-sel:#1b2124;
+  --tip-bg:#1b2124; --tip-ink:#f5f6f4;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#111312; --panel:#1a1a19; --panel-2:#20211f;
+    --ink:#eef0ee; --ink-2:#b9c0c1; --ink-3:#858e90;
+    --rule:#343836; --rule-soft:#2a2d2b; --grid:#2a2c2b;
+    --control:#5598e7; --focus:#6da7ec;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+    --render:#6e777a;
+    --good:#2fb52f;
+    --good-ink:#6fd66f; --warn-ink:#fbc75a; --crit-ink:#f08a8a;
+    --good-bg:#15301a; --warn-bg:#352a10; --crit-bg:#3a1a1a;
+    --dot-miss:#3a3f3d; --dot-sel:#eef0ee;
+    --tip-bg:#eef0ee; --tip-ink:#1b2124;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#111312; --panel:#1a1a19; --panel-2:#20211f;
+  --ink:#eef0ee; --ink-2:#b9c0c1; --ink-3:#858e90;
+  --rule:#343836; --rule-soft:#2a2d2b; --grid:#2a2c2b;
+  --control:#5598e7; --focus:#6da7ec;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --render:#6e777a;
+  --good:#2fb52f;
+  --good-ink:#6fd66f; --warn-ink:#fbc75a; --crit-ink:#f08a8a;
+  --good-bg:#15301a; --warn-bg:#352a10; --crit-bg:#3a1a1a;
+  --dot-miss:#3a3f3d; --dot-sel:#eef0ee;
+  --tip-bg:#eef0ee; --tip-ink:#1b2124;
+}
+
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;margin:0;padding:28px 16px 56px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:28px}
+h1,h2,h3{font-family:var(--cond);font-weight:600;text-wrap:balance;margin:0;letter-spacing:.005em}
+h1{font-size:clamp(28px,4.2vw,40px);line-height:1.08}
+h2{font-size:24px;line-height:1.2}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);font-weight:600}
+p{margin:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--ink-2)}
+.small{font-size:13px}
+
+header{display:grid;gap:10px;max-width:760px}
+.eyebrow{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+.lede{font-size:16.5px;color:var(--ink-2);max-width:66ch}
+
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--rule);background:var(--panel);color:var(--ink);padding:7px 12px;border-radius:6px;font-size:14px}
+.btn:hover{border-color:var(--ink-3)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+
+/* ---------- hero */
+.hero{display:grid;gap:18px}
+.hero-top{display:grid;gap:8px;max-width:760px}
+.big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.big .n{font-family:var(--mono);font-size:clamp(44px,7vw,64px);font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:var(--good-ink)}
+.big .of{font-family:var(--mono);font-size:clamp(22px,3vw,28px);color:var(--ink-2)}
+.hero-say{font-size:18px;line-height:1.4;max-width:58ch}
+.hero-say b{font-weight:600}
+.dots-wrap{position:relative}
+#dots{display:block;width:100%;cursor:pointer;touch-action:manipulation}
+.dots-legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13.5px;align-items:center}
+.dots-legend .it{display:flex;align-items:center;gap:7px}
+.dots-legend .dot{width:10px;height:10px;border-radius:50%;flex:none}
+.dots-legend .val{font-family:var(--mono);color:var(--ink-2)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.hero-actions .hint{font-size:13px;color:var(--ink-3);margin-left:4px}
+.caveat{font-size:13px;color:var(--ink-3);max-width:80ch}
+
+/* ---------- why */
+.why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:28px;align-items:start}
+@media (max-width:860px){.why{grid-template-columns:1fr}}
+.why-say{display:grid;gap:10px}
+.why-say p{max-width:52ch}
+
+/* ---------- bench */
+.bench-head{display:grid;gap:6px;max-width:760px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.presets .lbl{font-size:13px;color:var(--ink-3);margin-right:4px}
+.bench{display:grid;grid-template-columns:minmax(290px,370px) 1fr;gap:20px;align-items:start}
+@media (max-width:860px){
+  .bench{grid-template-columns:1fr}
+  .bench > .rack{order:2}
+  .bench > .readout{order:1}
+}
+.rack{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:6px 18px 12px}
+fieldset{border:0;border-top:1px solid var(--rule-soft);margin:0;padding:14px 0 6px;display:grid;gap:12px}
+fieldset:first-child{border-top:0}
+legend{padding:0;font-family:var(--cond);font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);font-weight:600;float:left;width:100%;margin-bottom:2px}
+legend + *{clear:both}
+.ctl{display:grid;gap:3px}
+.ctl .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ctl label{font-size:14px}
+.ctl output{font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ctl .hint{font-size:12px;color:var(--ink-3)}
+input[type=range]{width:100%;accent-color:var(--control);margin:2px 0}
+.fixed{font-size:13px;color:var(--ink-2);display:flex;justify-content:space-between;gap:10px}
+.toggle{display:flex;align-items:center;gap:10px;font-size:14px}
+.toggle input{width:18px;height:18px;accent-color:var(--crit)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:var(--panel);color:var(--ink-2);padding:5px 10px;font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
+
+.readout{display:grid;gap:16px}
+.loaded{font-size:13px;color:var(--ink-2);font-family:var(--mono)}
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start;padding:16px 20px;border-radius:10px;border:1px solid var(--rule)}
+.verdict .ico{grid-row:span 2;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:500;font-size:17px;color:#fff}
+.verdict .v-title{font-family:var(--cond);font-size:21px;font-weight:600;line-height:1.2}
+.verdict .v-body{color:var(--ink-2);font-size:14.5px;max-width:70ch}
+.verdict[data-state="good"]{background:var(--good-bg)} .verdict[data-state="good"] .ico{background:var(--good)} .verdict[data-state="good"] .v-title{color:var(--good-ink)}
+.verdict[data-state="warn"]{background:var(--warn-bg)} .verdict[data-state="warn"] .ico{background:var(--warn);color:#1b2124} .verdict[data-state="warn"] .v-title{color:var(--warn-ink)}
+.verdict[data-state="crit"]{background:var(--crit-bg)} .verdict[data-state="crit"] .ico{background:var(--crit)} .verdict[data-state="crit"] .v-title{color:var(--crit-ink)}
+
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule-soft);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+@media (max-width:640px){.figs{grid-template-columns:repeat(2,1fr)}}
+.fig{background:var(--panel);padding:14px 16px;display:grid;gap:2px;align-content:start}
+.fig .k{font-size:12.5px;color:var(--ink-2)}
+.fig .v{font-family:var(--mono);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.15}
+.fig .v small{font-size:14px;color:var(--ink-2);margin-left:3px}
+.fig .s{font-size:12px;color:var(--ink-3)}
+.fig.lead{background:var(--panel-2)}
+.fig.lead .v{font-size:28px}
+.fig.lead[data-state="good"] .v{color:var(--good-ink)}
+.fig.lead[data-state="warn"] .v{color:var(--warn-ink)}
+.fig.lead[data-state="crit"] .v{color:var(--crit-ink)}
+
+.chart{width:100%;display:block;overflow:visible}
+.chart text{font-family:var(--sans);fill:var(--ink-2);font-size:12px}
+.chart .tick text{font-family:var(--mono);fill:var(--ink-3);font-size:11px}
+.chart .axis-line{stroke:var(--rule)}
+.chart .gridline{stroke:var(--grid)}
+.chart .ceil-deliver{stroke:var(--ink);stroke-dasharray:5 4;stroke-width:1.5}
+.chart .ceil-thermal{stroke:var(--ink);stroke-width:1.5}
+.chart .ceil-label{fill:var(--ink);font-size:12px;font-weight:500}
+.chart .ceil-val{fill:var(--ink-2);font-family:var(--mono);font-size:11px}
+.chart .hit{fill:transparent;cursor:default}
+.chart .budget-line{stroke:var(--crit);stroke-width:1.5;stroke-dasharray:4 3}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:13px}
+.legend .it{display:flex;align-items:center;gap:7px}
+.legend .sw{width:12px;height:12px;border-radius:3px;flex:none}
+.legend .val{font-family:var(--mono);color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-family:var(--mono);font-size:13px;color:var(--ink-2);margin-top:14px;padding-top:12px;border-top:1px solid var(--rule-soft)}
+.chain b{color:var(--ink);font-weight:500}
+.chain .arr{color:var(--ink-3)}
+
+.form-scale .track{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;height:30px;border-radius:6px;overflow:hidden}
+.form-scale .zone{background:var(--panel-2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-2);text-align:center;padding:0 4px;line-height:1.15}
+.form-scale .zone.on{background:var(--ink);color:var(--panel)}
+.form-scale .ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:4px}
+
+details{border-top:1px solid var(--rule-soft);padding-top:10px}
+summary{cursor:pointer;font-size:14px;color:var(--ink-2)}
+.tbl-wrap{overflow-x:auto;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+th{font-weight:600;color:var(--ink-2);font-size:12.5px}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.tip{position:fixed;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);font-size:13px;padding:7px 10px;border-radius:6px;max-width:270px;z-index:10;line-height:1.4;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.tip b{font-weight:600}
+.tip .m{font-family:var(--mono)}
+
+footer{font-size:13px;color:var(--ink-3);max-width:80ch;display:grid;gap:6px}
+
+@media (prefers-reduced-motion: no-preference){
+  html{scroll-behavior:smooth}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">FULL-DIVE VR · RETINAL-PROJECTION HEADPIECE · POWER BUDGET</div>
+    <h1>Does a battery&#8209;less headpiece work?</h1>
+    <p class="lede">The near-term headpiece paints the image directly onto your retina with a tiny projector, instead of showing it on a screen and lens stack, and draws its power from the room, over the air. The room can safely deliver about 20 mW. The essay gives a range, not a number, for most of what the headpiece burns. So here are 5,000 headpieces, each built from a random point in every one of those ranges.</p>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="card hero" aria-labelledby="hero-h">
+    <div class="hero-top">
+      <div class="big" id="hero-h"><span class="n" id="n-close"></span><span class="of">of <span id="n-total"></span></span></div>
+      <p class="hero-say" id="hero-say"></p>
+    </div>
+
+    <div class="dots-legend" aria-hidden="true">
+      <span class="it"><span class="dot" style="background:var(--good)"></span>Runs on room power alone <span class="val" id="lg-close"></span></span>
+      <span class="it"><span class="dot" style="background:var(--dot-miss)"></span>Needs a battery on the head <span class="val" id="lg-miss"></span></span>
+    </div>
+
+    <div class="dots-wrap">
+      <canvas id="dots" role="img" aria-label=""></canvas>
+    </div>
+
+    <div class="hero-actions">
+      <button class="btn primary" type="button" id="open-good">Open one that works</button>
+      <button class="btn" type="button" id="open-typical">Open a typical one</button>
+      <button class="btn" type="button" id="rerun">Build another 5,000</button>
+      <span class="hint">Or click any dot.</span>
+    </div>
+
+    <p class="caveat">Each dot is one headpiece. Every uncertain part got a value picked at random, evenly, from the range the essay gives for it. So this isn't the odds that the real device works. It shows how much of the essay's own range of guesses lands under the 20 mW line.</p>
+
+    <details>
+      <summary>What went into each headpiece</summary>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Part</th><th>Low</th><th>High</th><th>Source</th></tr></thead>
+          <tbody id="range-rows"></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= WHY ================= -->
+  <section class="card" aria-labelledby="why-h">
+    <div class="why">
+      <div class="why-say">
+        <h2 id="why-h">One part decides most of it</h2>
+        <p class="muted" id="why-say"></p>
+        <p class="small muted">Each bar: how far the power left over moves when that one part goes from the low end of its range to the high end, with everything else held in the middle. The dashed line is the whole 20 mW the room delivers.</p>
+      </div>
+      <svg class="chart" id="tornado" role="img" aria-label="How much each part's range moves the power left over"></svg>
+    </div>
+  </section>
+
+  <!-- ================= BENCH ================= -->
+  <section id="bench-sec" style="display:grid;gap:16px" aria-labelledby="bench-h">
+    <div class="bench-head">
+      <h2 id="bench-h">Open one up</h2>
+      <p class="muted">Every dot above is one set of these settings. Load one from above, or set your own.</p>
+    </div>
+
+    <div class="presets" role="group" aria-label="Load a design">
+      <span class="lbl">Or load:</span>
+      <button class="btn" type="button" id="p-low" aria-pressed="true">Low end of every range</button>
+      <button class="btn" type="button" id="p-high" aria-pressed="false">High end of every range</button>
+      <button class="btn" type="button" id="p-quest" aria-pressed="false">Rendering on the head</button>
+    </div>
+
+    <div class="bench">
+      <form class="rack" id="rack" autocomplete="off">
+        <fieldset>
+          <legend>Room to head: power delivery</legend>
+          <div class="fixed"><span>Field strength at the exposure limit</span><span class="mono">1.0 mW/cm²</span></div>
+          <div class="ctl">
+            <div class="row"><label for="area">Capture area</label><output id="area-o" for="area"></output></div>
+            <input type="range" id="area" min="5" max="60" step="1" value="30">
+            <div class="hint">Antenna surface on the headpiece. Bigger catches more field.</div>
+          </div>
+          <div class="ctl">
+            <div class="row"><label for="eta">Harvesting efficiency</label><output id="eta-o" for="eta"></output></div>
+            <input type="range" id="eta" min="20" max="85" step="1" value="65">
+            <div class="hint">Share of captured energy turned into usable current.</div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Data link: receiving the picture</legend>
+          <div class="fixed"><span>Picture</span><span class="mono">16K per eye · 24 bit</span></div>
+          <div class="ctl">
+            <div class="row"><label for="fps">Frame rate</label><output id="fps-o" for="fps"></output></div>
+            <input type="range" id="fps" min="60" max="144" step="6" value="120">
+          </div>
+          <div class="ctl">
+            <div class="row"><label for="fov">Sharp-centre streaming</label><output id="fov-o" for="fov"></output></div>
+            <input type="range" id="fov" min="1" max="30" step="1" value="12">
+            <div class="hint">Full detail only where the eye looks. Essay assumes ×12.</div>
+          </div>
+          <div class="ctl">
+            <div class="row"><label for="comp">Compression</label><output id="comp-o" for="comp"></output></div>
+            <input type="range" id="comp" min="1" max="40" step="1" value="10">
+            <div class="hint">Essay assumes ×10.</div>
+          </div>
+          <div class="ctl">
+            <div class="row"><label for="pj">Receiver energy per bit</label><output id="pj-o" for="pj"></output></div>
+            <input type="range" id="pj" min="0.5" max="15" step="0.1" value="1">
+            <div class="hint">Essay range 1 to 10 pJ/bit. The biggest unknown.</div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Retinal projector</legend>
+          <div class="ctl">
+            <div class="row"><label for="opt">Light into the eye</label><output id="opt-o" for="opt"></output></div>
+            <input type="range" id="opt" min="0.5" max="8" step="0.1" value="1">
+          </div>
+          <div class="ctl">
+            <div class="row"><label for="wpe">Wall-plug efficiency</label><output id="wpe-o" for="wpe"></output></div>
+            <input type="range" id="wpe" min="10" max="50" step="1" value="20">
+            <div class="hint">Electricity in to light out. No shipping part shows 20 to 30% yet.</div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Housekeeping</legend>
+          <div class="ctl">
+            <div class="row"><label for="trk">Eye and head tracking</label><output id="trk-o" for="trk"></output></div>
+            <input type="range" id="trk" min="0.5" max="8" step="0.1" value="1">
+          </div>
+          <div class="ctl">
+            <div class="row"><label for="conv">Power conversion loss</label><output id="conv-o" for="conv"></output></div>
+            <input type="range" id="conv" min="0.5" max="8" step="0.1" value="1">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Scalp contact: heat</legend>
+          <div class="ctl">
+            <div class="row"><label for="contact">Contact area</label><output id="contact-o" for="contact"></output></div>
+            <input type="range" id="contact" min="10" max="60" step="1" value="20">
+          </div>
+          <div class="row" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <span class="small muted" id="regime-lbl">Scalp under the device</span>
+            <div class="seg" role="group" aria-labelledby="regime-lbl">
+              <button type="button" id="r-real" aria-pressed="true">Still sheds heat</button>
+              <button type="button" id="r-cons" aria-pressed="false">Fully blocked</button>
+            </div>
+          </div>
+          <label class="toggle" for="render"><input type="checkbox" id="render"> Put the rendering back on the head (Quest 3, 8.4 W)</label>
+        </fieldset>
+      </form>
+
+      <div class="readout">
+        <div class="loaded" id="loaded">Showing: low end of every range</div>
+        <div class="verdict" id="verdict" data-state="good" aria-live="polite">
+          <div class="ico" id="v-ico" aria-hidden="true">✓</div>
+          <div class="v-title" id="v-title"></div>
+          <div class="v-body" id="v-body"></div>
+        </div>
+
+        <div class="figs">
+          <div class="fig lead" id="f-margin-card" data-state="good"><span class="k" id="f-margin-k">Margin to room power</span><span class="v" id="f-margin"></span><span class="s" id="f-margin-s"></span></div>
+          <div class="fig"><span class="k">Head-side load</span><span class="v" id="f-load"></span><span class="s">everything the headpiece burns</span></div>
+          <div class="fig"><span class="k">Room can deliver</span><span class="v" id="f-del"></span><span class="s" id="f-del-s"></span></div>
+          <div class="fig"><span class="k">Scalp can shed</span><span class="v" id="f-th"></span><span class="s" id="f-th-s"></span></div>
+        </div>
+
+        <div class="card">
+          <h3>Where the milliwatts go</h3>
+          <svg class="chart" id="budget" role="img" aria-label="Stacked bar of head-side power by component against the delivery and thermal ceilings"></svg>
+          <div class="legend" id="legend"></div>
+          <div class="chain" id="chain"></div>
+        </div>
+
+        <div class="card">
+          <h3>What the capture area does to the object</h3>
+          <p class="small muted" style="margin:6px 0 10px">A bigger antenna catches more of the field, and the headpiece stops looking like eyewear. Rough guide.</p>
+          <div class="form-scale">
+            <div class="track" id="form-track">
+              <div class="zone" data-max="18">Glasses frame</div>
+              <div class="zone" data-max="32">Wide temples</div>
+              <div class="zone" data-max="46">Headband</div>
+              <div class="zone" data-max="60">Not eyewear</div>
+            </div>
+            <div class="ends"><span>5 cm²</span><span>60 cm²</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Model: head-side load is receive power (delivered bit rate × energy per bit) plus projector power (light ÷ wall-plug efficiency) plus tracking plus conversion loss. Room delivery is field strength × capture area × harvesting efficiency. The thermal ceiling is 94.8 W/m² of contact (84.8 W/m² if the device blocks all heat loss to room air), from a four-layer tissue heat-transfer model held to a 1 °C rise.</p>
+    <p>The essay's endgame, writing straight to the visual cortex, uses the same room node and power envelope with a different last component. That component doesn't exist yet and isn't modelled here.</p>
+    <p>From the essay <i>The Architecture Behind Full-Dive Virtual Reality</i>. Quest 3 figure is battery capacity ÷ runtime.</p>
+    <p><a href="single-design.html">Prefer the single-design bench without the 5,000 dots? Open it here.</a></p>
+  </footer>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const NS = "http://www.w3.org/2000/svg";
+  const W16 = 15360, H16 = 8640, BPP = 24, EYES = 2, S_LIMIT = 1.0;
+  const FLUX = {real:94.8, cons:84.8};
+  const QUEST_MW = 8400;
+
+  const state = {regime:"real"};
+  const ids = ["area","eta","fps","fov","comp","pj","opt","wpe","trk","conv","contact"];
+
+  const PRESETS = {
+    low:  {area:30,eta:65,fps:120,fov:12,comp:10,pj:1, opt:1,wpe:20,trk:1,conv:1,contact:20,render:false},
+    high: {area:30,eta:65,fps:120,fov:12,comp:10,pj:10,opt:6,wpe:20,trk:5,conv:4,contact:20,render:false},
+    quest:{area:30,eta:65,fps:120,fov:12,comp:10,pj:1, opt:1,wpe:20,trk:1,conv:1,contact:20,render:true}
+  };
+  const PRESET_LABEL = {low:"low end of every range", high:"high end of every range", quest:"rendering on the head"};
+
+  function readInputs(){
+    const v = {}; ids.forEach(k => v[k] = parseFloat($(k).value));
+    v.render = $("render").checked; v.regime = state.regime; return v;
+  }
+
+  function model(v){
+    const rawBps = W16*H16*EYES*v.fps*BPP;
+    const delBps = rawBps/(v.fov*v.comp);
+    const rx = delBps*v.pj*1e-12*1e3;
+    const proj = v.opt/(v.wpe/100);
+    const parts = [
+      {key:"rx",   name:"Receiving the link", mw:rx,   c:"--s1"},
+      {key:"proj", name:"Retinal projector",  mw:proj, c:"--s2"},
+      {key:"trk",  name:"Eye and head tracking", mw:v.trk, c:"--s3"},
+      {key:"conv", name:"Power conversion loss", mw:v.conv, c:"--s4"}
+    ];
+    if (v.render) parts.push({key:"render", name:"Rendering on the head", mw:QUEST_MW, c:"--render"});
+    const load = parts.reduce((a,p)=>a+p.mw,0);
+    const deliver = S_LIMIT*v.area*(v.eta/100);
+    const thermal = FLUX[v.regime||"real"]*v.contact*0.1;
+    return {rawBps, delBps, parts, load, deliver, thermal};
+  }
+
+  const fmtMW = x => x>=1000 ? (x/1000).toFixed(x>=10000?1:2)+" W" : (x>=100 ? x.toFixed(0) : x.toFixed(1))+" mW";
+  const numMW = x => x>=1000 ? [(x/1000).toFixed(2),"W"] : [x>=100?x.toFixed(0):x.toFixed(1),"mW"];
+  const fmtGb = b => (b/1e9 >= 100 ? (b/1e9).toFixed(0) : (b/1e9).toFixed(1))+" Gb/s";
+
+  function setOutputs(v){
+    $("area-o").textContent = v.area+" cm²";
+    $("eta-o").textContent = v.eta+"%";
+    $("fps-o").textContent = v.fps+" fps";
+    $("fov-o").textContent = "×"+v.fov;
+    $("comp-o").textContent = "×"+v.comp;
+    $("pj-o").textContent = v.pj.toFixed(1)+" pJ/bit";
+    $("opt-o").textContent = v.opt.toFixed(1)+" mW";
+    $("wpe-o").textContent = v.wpe+"%";
+    $("trk-o").textContent = v.trk.toFixed(1)+" mW";
+    $("conv-o").textContent = v.conv.toFixed(1)+" mW";
+    $("contact-o").textContent = v.contact+" cm²";
+  }
+
+  function el(tag, attrs, parent){
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e); return e;
+  }
+
+  // ---------- tooltip
+  const tip = $("tip");
+  function showTip(html, x0, y0){
+    tip.innerHTML = html; tip.hidden = false;
+    const r = tip.getBoundingClientRect();
+    let x = x0 + 14, y = y0 + 14;
+    if (x + r.width > innerWidth - 8) x = x0 - r.width - 14;
+    if (y + r.height > innerHeight - 8) y = y0 - r.height - 14;
+    tip.style.left = x+"px"; tip.style.top = y+"px";
+  }
+  function hideTip(){ tip.hidden = true; }
+  function bindTip(node, html){
+    node.addEventListener("mousemove", e => showTip(typeof html==="function"?html():html, e.clientX, e.clientY));
+    node.addEventListener("mouseleave", hideTip);
+  }
+
+  function niceMax(x){
+    const p = Math.pow(10, Math.floor(Math.log10(x)));
+    for (const m of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]) if (m*p >= x) return m*p;
+    return 10*p;
+  }
+  function ticks(max){
+    const step = niceMax(max/5);
+    const t=[]; for(let v=0; v<=max+1e-9; v+=step) t.push(+v.toFixed(6)); return t;
+  }
+
+  // ---------- budget bar
+  function drawBudget(m){
+    const svg = $("budget");
+    const W = Math.max(280, svg.clientWidth || svg.parentNode.clientWidth);
+    const H = 162, padL = 4, padR = 12, top = 64, barH = 38;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+    svg.innerHTML = "";
+    const max = niceMax(Math.max(m.load, m.thermal, m.deliver)*1.08);
+    const x = v => padL + (v/max)*(W-padL-padR);
+
+    const gAxis = el("g", {}, svg);
+    ticks(max).forEach(t => {
+      el("line", {x1:x(t), x2:x(t), y1:top-6, y2:top+barH+6, class:"gridline"}, gAxis);
+      const g = el("g", {class:"tick"}, gAxis);
+      const tx = el("text", {x:x(t), y:top+barH+22, "text-anchor": t===0?"start":"middle"}, g);
+      tx.textContent = t>=1000 ? (t/1000)+" W" : t;
+    });
+    const unit = el("text", {x:W-padR, y:top+barH+40, "text-anchor":"end"}, gAxis);
+    unit.textContent = max>=1000 ? "" : "mW"; unit.setAttribute("style","font-family:var(--mono);fill:var(--ink-3);font-size:11px");
+
+    let acc = 0;
+    const segs = m.parts.filter(p=>p.mw>0);
+    segs.forEach((p,i) => {
+      const x0 = x(acc), x1 = x(acc+p.mw);
+      const gap = i>0 ? 2 : 0;
+      const w = Math.max(0.5, x1-x0-gap);
+      el("rect", {x:x0+gap, y:top, width:w, height:barH, fill:css(p.c), rx:(i===segs.length-1 ? 4 : 0)}, svg);
+      if (i===segs.length-1 && w>6) el("rect", {x:x0+gap, y:top, width:Math.min(4,w), height:barH, fill:css(p.c)}, svg);
+      if (p.key==="render"){
+        const pat = el("pattern",{id:"hatch",width:6,height:6,patternUnits:"userSpaceOnUse",patternTransform:"rotate(45)"},svg);
+        el("line",{x1:0,y1:0,x2:0,y2:6,stroke:css("--panel"),"stroke-width":1.4,"stroke-opacity":.5},pat);
+        el("rect",{x:x0+gap,y:top,width:w,height:barH,fill:"url(#hatch)"},svg);
+      }
+      const share = (p.mw/m.load*100);
+      const hit = el("rect", {x:x0, y:top-4, width:Math.max(8,x1-x0), height:barH+8, class:"hit"}, svg);
+      bindTip(hit, `<b>${p.name}</b><br><span class="m">${fmtMW(p.mw)}</span> · ${share.toFixed(0)}% of the load`);
+      acc += p.mw;
+    });
+
+    const marks = [
+      {v:m.deliver, cls:"ceil-deliver", lbl:"Room delivers"},
+      {v:m.thermal, cls:"ceil-thermal", lbl:"Scalp sheds"}
+    ].map(c => ({...c, x:x(c.v), row:0, anchor:"start"}));
+    const LW = 96;
+    marks.forEach(c => { if (c.x + 5 + LW > W) c.anchor = "end"; });
+    const span = c => c.anchor==="start" ? [c.x+5, c.x+5+LW] : [c.x-5-LW, c.x-5];
+    const [a,b] = marks[0].x <= marks[1].x ? [marks[0],marks[1]] : [marks[1],marks[0]];
+    const overlap = (p,q) => span(p)[1] > span(q)[0] && span(q)[1] > span(p)[0];
+    if (overlap(a,b)){
+      if (a.x - 5 - LW >= 0) a.anchor = "end";
+      if (overlap(a,b)) a.row = 1;
+    }
+    marks.forEach(c => {
+      const yL = c.row ? top-44 : top-20, yV = c.row ? top-31 : top-7;
+      el("line", {x1:c.x, x2:c.x, y1:(c.row? top-54 : top-30), y2:top+barH+6, class:c.cls}, svg);
+      const lx = c.anchor==="start" ? c.x+5 : c.x-5;
+      el("text", {x:lx, y:yL-6, class:"ceil-label", "text-anchor":c.anchor}, svg).textContent = c.lbl;
+      el("text", {x:lx, y:yV-6, class:"ceil-val", "text-anchor":c.anchor}, svg).textContent = fmtMW(c.v);
+      const hit = el("rect",{x:c.x-6,y:top-54,width:12,height:barH+60,class:"hit"},svg);
+      bindTip(hit, `<b>${c.lbl}</b><br><span class="m">${fmtMW(c.v)}</span>`);
+    });
+
+    const lg = $("legend"); lg.innerHTML = "";
+    m.parts.forEach(p => {
+      const d = document.createElement("div"); d.className="it";
+      d.innerHTML = `<span class="sw" style="background:var(${p.c})"></span><span>${p.name}</span><span class="val">${fmtMW(p.mw)}</span>`;
+      lg.appendChild(d);
+    });
+
+    $("chain").innerHTML =
+      `<span>raw <b>${fmtGb(m.rawBps)}</b></span><span class="arr">→</span>`+
+      `<span>÷ sharp-centre × compression → <b>${fmtGb(m.delBps)}</b></span><span class="arr">→</span>`+
+      `<span>× energy per bit → <b>${fmtMW(m.parts[0].mw)}</b> to receive</span>`;
+  }
+
+  function verdict(m){
+    const V = $("verdict"), t=$("v-title"), b=$("v-body"), ic=$("v-ico");
+    if (m.load > m.thermal){
+      V.dataset.state="crit"; ic.textContent="!";
+      t.textContent = `Over the thermal ceiling, ${(m.load/m.thermal).toFixed(m.load/m.thermal>=10?0:1)}× what the scalp can shed`;
+      b.textContent = m.parts.some(p=>p.key==="render")
+        ? "This is where every shipping headset sits. The heat has to leave the head, which means the rendering does too."
+        : "Tissue under the device would warm by more than a degree. Cut the load or spread it over more contact area.";
+    } else if (m.load > m.deliver){
+      V.dataset.state="warn"; ic.textContent="–";
+      t.textContent = `The scalp is fine. The room falls ${fmtMW(m.load-m.deliver)} short.`;
+      b.textContent = `Load is ${fmtMW(m.load)} against ${fmtMW(m.deliver)} of room power. Either the headpiece carries a cell, the capture area grows, or the harvesting circuit gets more efficient.`;
+    } else {
+      V.dataset.state="good"; ic.textContent="✓";
+      t.textContent = `Closes on room power, ${fmtMW(m.deliver-m.load)} to spare`;
+      b.textContent = `Load is ${fmtMW(m.load)}, under the ${fmtMW(m.deliver)} the room delivers and far under the ${fmtMW(m.thermal)} the scalp can shed. No battery needed.`;
+    }
+  }
+
+  function figs(m, v){
+    const put = (id, x) => { const [n,u]=numMW(x); $(id).innerHTML = `${n}<small>${u}</small>`; };
+    const card = $("f-margin-card");
+    if (m.load > m.thermal){
+      card.dataset.state = "crit";
+      $("f-margin-k").textContent = "Over the thermal ceiling by";
+      put("f-margin", m.load - m.thermal);
+      $("f-margin-s").textContent = "the scalp can't shed this much heat";
+    } else {
+      const margin = m.deliver - m.load;
+      card.dataset.state = margin >= 0 ? "good" : "warn";
+      $("f-margin-k").textContent = margin >= 0 ? "Margin to room power" : "Short of room power by";
+      put("f-margin", Math.abs(margin));
+      $("f-margin-s").textContent = margin >= 0 ? "left over after the room delivers" : "the room can't cover the load";
+    }
+    put("f-load", m.load); put("f-del", m.deliver); put("f-th", m.thermal);
+    $("f-del-s").textContent = `1.0 mW/cm² × ${v.area} cm² × ${v.eta}%`;
+    $("f-th-s").textContent = `${FLUX[v.regime]} W/m² × ${v.contact} cm²`;
+  }
+
+  function formScale(v){
+    const zones = [...document.querySelectorAll("#form-track .zone")];
+    let lo = 5;
+    zones.forEach(z => { const hi = +z.dataset.max; z.classList.toggle("on", v.area>lo-0.001 && v.area<=hi); lo = hi; });
+    if (v.area<=18) zones[0].classList.add("on");
+  }
+
+  // ---------- the 5,000
+  const RANGES = [
+    {k:"pj",   name:"Receiver energy per bit", short:"Receiver energy/bit", lo:1, hi:10, step:0.1, unit:"pJ/bit", src:"Essay"},
+    {k:"opt",  name:"Projector light into the eye", short:"Projector light", lo:1, hi:6, step:0.1, unit:"mW", src:"Essay"},
+    {k:"wpe",  name:"Projector wall-plug efficiency", short:"Projector efficiency", lo:20, hi:30, step:1, unit:"%", src:"Essay"},
+    {k:"trk",  name:"Eye and head tracking", short:"Tracking", lo:1, hi:5, step:0.1, unit:"mW", src:"Essay"},
+    {k:"conv", name:"Power conversion loss", short:"Conversion loss", lo:1, hi:4, step:0.1, unit:"mW", src:"Essay"},
+    {k:"fov",  name:"Sharp-centre streaming", short:"Sharp-centre", lo:8, hi:16, step:1, unit:"×", src:"Assumed, around the essay's ×12"},
+    {k:"comp", name:"Compression", short:"Compression", lo:6, hi:14, step:1, unit:"×", src:"Assumed, around the essay's ×10"},
+    {k:"area", name:"Capture area", short:"Capture area", lo:20, hi:40, step:1, unit:"cm²", src:"Assumed, around the essay's 30 cm²"},
+    {k:"eta",  name:"Harvesting efficiency", short:"Harvesting", lo:50, hi:80, step:1, unit:"%", src:"Assumed, around the essay's 65%"}
+  ];
+  const FIXED = {fps:120, contact:20, regime:"real", render:false};
+  const N = 5000;
+  let seed = 20260926;
+  let run = null;          // {items:[{v,margin,load,deliver}], order:[idx sorted best-first], closes}
+  let selected = -1;       // index into run.items
+
+  function rng(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+  const snap = (x, s) => +(Math.round(x/s)*s).toFixed(4);
+
+  function buildRun(){
+    const r = rng(seed);
+    const items = new Array(N);
+    let closes = 0;
+    for (let i=0;i<N;i++){
+      const v = Object.assign({}, FIXED);
+      RANGES.forEach(R => v[R.k] = snap(R.lo + (R.hi-R.lo)*r(), R.step));
+      const m = model(v);
+      const margin = m.deliver - m.load;
+      if (margin >= 0) closes++;
+      items[i] = {v, margin, load:m.load, deliver:m.deliver};
+    }
+    const order = [...items.keys()].sort((a,b)=>items[b].margin-items[a].margin);
+    run = {items, order, closes};
+    selected = -1;
+  }
+
+  function heroText(){
+    const c = run.closes, miss = N - c;
+    const pct = c/N*100;
+    const pctS = pct<1 ? pct.toFixed(1) : pct<10 ? pct.toFixed(1) : pct.toFixed(0);
+    $("n-close").textContent = c.toLocaleString();
+    $("n-total").textContent = N.toLocaleString();
+    $("lg-close").textContent = c.toLocaleString();
+    $("lg-miss").textContent = miss.toLocaleString();
+    const med = run.items[run.order[Math.floor(N/2)]].margin;
+    $("hero-say").innerHTML = `run on room power alone. That's <b>${pctS}%</b>. The other ${miss.toLocaleString()} need a battery on the head, which is the thing this design exists to avoid. A typical one falls <b>${fmtMW(-med)}</b> short of the 20 mW or so the room delivers.`;
+    $("dots").setAttribute("aria-label", `${N.toLocaleString()} dots, one per sampled headpiece. ${c.toLocaleString()} (${pctS}%) run on room power alone; ${miss.toLocaleString()} need a battery.`);
+  }
+
+  // ---- dot field (canvas)
+  const cv = $("dots");
+  let geo = null; // {cols, rows, pitch, r, W, H}
+  function drawDots(){
+    const W = cv.parentNode.clientWidth;
+    const pitch = W >= 700 ? 9 : W >= 480 ? 7 : 5.5;
+    const cols = Math.floor(W / pitch);
+    const rows = Math.ceil(N / cols);
+    const H = Math.ceil(rows * pitch);
+    const dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    cv.style.height = H+"px";
+    const ctx = cv.getContext("2d");
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    const r = Math.max(1.4, pitch*0.36);
+    const off = (W - cols*pitch)/2;
+    geo = {cols, rows, pitch, r, W, H, off};
+    const cGood = css("--good"), cMiss = css("--dot-miss");
+    // misses first, then goods on top (no overlap anyway)
+    ctx.fillStyle = cMiss; ctx.beginPath();
+    for (let p=0;p<N;p++){
+      const idx = run.order[p]; if (run.items[idx].margin >= 0) continue;
+      const cx = off + (p%cols)*pitch + pitch/2, cy = Math.floor(p/cols)*pitch + pitch/2;
+      ctx.moveTo(cx+r, cy); ctx.arc(cx, cy, r, 0, Math.PI*2);
+    }
+    ctx.fill();
+    ctx.fillStyle = cGood; ctx.beginPath();
+    for (let p=0;p<N;p++){
+      const idx = run.order[p]; if (run.items[idx].margin < 0) continue;
+      const cx = off + (p%cols)*pitch + pitch/2, cy = Math.floor(p/cols)*pitch + pitch/2;
+      ctx.moveTo(cx+r, cy); ctx.arc(cx, cy, r, 0, Math.PI*2);
+    }
+    ctx.fill();
+    // selection ring
+    if (selected >= 0){
+      const p = run.order.indexOf(selected);
+      const cx = off + (p%cols)*pitch + pitch/2, cy = Math.floor(p/cols)*pitch + pitch/2;
+      ctx.lineWidth = 2; ctx.strokeStyle = css("--dot-sel");
+      ctx.beginPath(); ctx.arc(cx, cy, r+3, 0, Math.PI*2); ctx.stroke();
+    }
+  }
+  function posAt(e){
+    const b = cv.getBoundingClientRect();
+    const x = e.clientX - b.left - geo.off, y = e.clientY - b.top;
+    const c = Math.floor(x/geo.pitch), rr = Math.floor(y/geo.pitch);
+    if (c<0 || c>=geo.cols || rr<0) return -1;
+    const p = rr*geo.cols + c;
+    return p < N ? p : -1;
+  }
+  function dotTip(idx){
+    const it = run.items[idx], v = it.v;
+    const ok = it.margin >= 0;
+    const rank = run.order.indexOf(idx)+1;
+    return `<b>${ok ? "Runs on room power" : "Needs a battery"}</b> · <span class="m">${ok?"+":"−"}${fmtMW(Math.abs(it.margin))}</span><br>`+
+      `Burns <span class="m">${fmtMW(it.load)}</span>, room gives <span class="m">${fmtMW(it.deliver)}</span><br>`+
+      `Receiver <span class="m">${v.pj.toFixed(1)} pJ/bit</span> · projector <span class="m">${v.opt.toFixed(1)} mW</span> at <span class="m">${v.wpe}%</span><br>`+
+      `<span style="opacity:.75">#${rank.toLocaleString()} of ${N.toLocaleString()} · click to open</span>`;
+  }
+  cv.addEventListener("mousemove", e => {
+    const p = posAt(e); if (p<0){ hideTip(); return; }
+    showTip(dotTip(run.order[p]), e.clientX, e.clientY);
+  });
+  cv.addEventListener("mouseleave", hideTip);
+  cv.addEventListener("click", e => {
+    const p = posAt(e); if (p<0) return;
+    hideTip(); openSample(run.order[p]);
+  });
+
+  function openSample(idx, scroll=true){
+    selected = idx;
+    const v = run.items[idx].v;
+    ids.forEach(k => $(k).value = v[k]);
+    $("render").checked = false;
+    setRegime("real", false);
+    markPreset(null);
+    const rank = run.order.indexOf(idx)+1;
+    $("loaded").textContent = `Showing: headpiece #${rank.toLocaleString()} of ${N.toLocaleString()} from above (${run.items[idx].margin>=0?"one that works":"needs a battery"})`;
+    drawDots(); render();
+    if (scroll) $("bench-sec").scrollIntoView({block:"start"});
+  }
+
+  // ---- tornado
+  function tornadoData(){
+    const mid = Object.assign({}, FIXED); RANGES.forEach(R => mid[R.k]=(R.lo+R.hi)/2);
+    return RANGES.map(R => {
+      const ma = model(Object.assign({}, mid, {[R.k]:R.lo})), mb = model(Object.assign({}, mid, {[R.k]:R.hi}));
+      return {R, swing:Math.abs((mb.deliver-mb.load)-(ma.deliver-ma.load))};
+    }).sort((p,q)=>q.swing-p.swing);
+  }
+  function drawTornado(data){
+    const svg = $("tornado");
+    const W = Math.max(280, svg.clientWidth || svg.parentNode.clientWidth);
+    const rowH = 30, top = 22, labW = Math.min(170, W*0.42), padR = 64;
+    const H = top + data.length*rowH + 26;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+    svg.innerHTML = "";
+    const maxS = niceMax(data[0].swing);
+    const x = v => labW + (v/maxS)*(W-labW-padR);
+    ticks(maxS).forEach(t=>{
+      el("line",{x1:x(t),x2:x(t),y1:top,y2:H-22,class:"gridline"},svg);
+      const tx = el("text",{x:x(t),y:H-6,"text-anchor":"middle"},el("g",{class:"tick"},svg)); tx.textContent=t;
+    });
+    // 20 mW reference: the whole room budget
+    const ref = 19.5;
+    if (ref <= maxS){
+      el("line",{x1:x(ref),x2:x(ref),y1:top-14,y2:H-22,class:"budget-line"},svg);
+      const t = el("text",{x:x(ref)+5,y:top-6,"text-anchor":"start"},svg);
+      t.textContent = "whole room budget"; t.setAttribute("style","font-size:11.5px;fill:var(--ink)");
+    }
+    const s1 = css("--s1");
+    data.forEach((d,i)=>{
+      const cy = top + i*rowH + rowH/2;
+      const lab = el("text",{x:labW-10,y:cy+4,"text-anchor":"end"},svg); lab.textContent = d.R.name;
+      if (lab.getComputedTextLength && lab.getComputedTextLength() > labW-14) lab.textContent = d.R.short;
+      const w = Math.max(1.5, x(d.swing)-x(0));
+      el("path",{d:roundRight(x(0), cy-8, w, 16, Math.min(4,w/2)), fill: i===0 ? s1 : css("--render")},svg);
+      const vt = el("text",{x:x(0)+w+6,y:cy+4,"text-anchor":"start"},svg);
+      vt.textContent = d.swing.toFixed(1)+" mW"; vt.setAttribute("style","font-family:var(--mono);font-size:11.5px;fill:var(--ink-2)");
+      const hit = el("rect",{x:0,y:cy-rowH/2,width:W,height:rowH,class:"hit"},svg);
+      const u = d.R.unit==="×";
+      bindTip(hit, `<b>${d.R.name}</b><br>${u?"×":""}${d.R.lo}${u?"":" "+d.R.unit} to ${u?"×":""}${d.R.hi}${u?"":" "+d.R.unit}<br>moves the leftover power by <span class="m">${d.swing.toFixed(1)} mW</span>`);
+    });
+    const top1 = data[0], top2 = data[1];
+    $("why-say").innerHTML = `How much energy the receiver spends per bit of picture is the one number that matters most. Across the essay's 1 to 10 pJ/bit, it swings the power left over by <b class="mono">${top1.swing.toFixed(0)} mW</b>, about ${Math.round(top1.swing/19.5)} times the whole budget. The next biggest, ${top2.R.name.toLowerCase()}, moves it by ${top2.swing.toFixed(0)} mW. Most of the gray dots above are headpieces with an expensive receiver.`;
+  }
+  function roundRight(x,y,w,h,r){
+    return `M${x},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h-r}Q${x+w},${y+h} ${x+w-r},${y+h}H${x}Z`;
+  }
+
+  function fillRanges(){
+    $("range-rows").innerHTML = RANGES.map(R=>`<tr><td>${R.name}</td><td class="num">${R.unit==="×"?"×"+R.lo:R.lo+" "+R.unit}</td><td class="num">${R.unit==="×"?"×"+R.hi:R.hi+" "+R.unit}</td><td>${R.src}</td></tr>`).join("")
+      + `<tr><td>Frame rate, field strength, contact area</td><td class="num" colspan="2">120 fps · 1.0 mW/cm² · 20 cm²</td><td>Held fixed</td></tr>`;
+  }
+
+  // ---------- render loop (bench)
+  let frame = 0;
+  function render(){
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(()=>{
+      const v = readInputs(); setOutputs(v);
+      const m = model(v);
+      verdict(m); figs(m, v); drawBudget(m); formScale(v);
+    });
+  }
+
+  function applyPreset(name){
+    const p = PRESETS[name];
+    ids.forEach(k => $(k).value = p[k]);
+    $("render").checked = p.render;
+    setRegime("real", false);
+    markPreset(name);
+    selected = -1; drawDots();
+    $("loaded").textContent = "Showing: " + PRESET_LABEL[name];
+    render();
+  }
+  function markPreset(name){
+    ["low","high","quest"].forEach(n => $("p-"+n).setAttribute("aria-pressed", String(n===name)));
+  }
+  function setRegime(r, rr=true){
+    state.regime = r;
+    $("r-real").setAttribute("aria-pressed", String(r==="real"));
+    $("r-cons").setAttribute("aria-pressed", String(r==="cons"));
+    if (rr){ markPreset(null); render(); }
+  }
+  function userEdited(){
+    markPreset(null);
+    if (selected >= 0){ selected = -1; drawDots(); }
+    $("loaded").textContent = "Showing: your own settings";
+    render();
+  }
+
+  $("p-low").addEventListener("click", ()=>applyPreset("low"));
+  $("p-high").addEventListener("click", ()=>applyPreset("high"));
+  $("p-quest").addEventListener("click", ()=>applyPreset("quest"));
+  $("r-real").addEventListener("click", ()=>{ setRegime("real"); $("loaded").textContent = "Showing: your own settings"; });
+  $("r-cons").addEventListener("click", ()=>{ setRegime("cons"); $("loaded").textContent = "Showing: your own settings"; });
+  $("rack").addEventListener("input", userEdited);
+  $("rack").addEventListener("submit", e=>e.preventDefault());
+
+  const r2 = rng(99);
+  $("open-good").addEventListener("click", ()=>{
+    if (!run.closes) return;
+    const k = Math.floor(r2()*run.closes);
+    openSample(run.order[k]);
+  });
+  $("open-typical").addEventListener("click", ()=> openSample(run.order[Math.floor(N/2)]));
+  $("rerun").addEventListener("click", ()=>{
+    seed = (seed*1664525 + 1013904223)>>>0;
+    buildRun(); heroText(); drawDots();
+    $("open-good").disabled = !run.closes;
+  });
+
+  fillRanges();
+  buildRun(); heroText(); drawDots();
+  drawTornado(tornadoData());
+  render();
+
+  let rt, lastW = 0;
+  const ro = new ResizeObserver(()=>{
+    clearTimeout(rt);
+    rt = setTimeout(()=>{
+      const w = document.querySelector(".wrap").clientWidth;
+      if (w === lastW) return; lastW = w;
+      drawDots(); render(); drawTornado(tornadoData());
+    }, 60);
+  });
+  ro.observe(document.querySelector(".wrap"));
+  const redrawAll = ()=>{ drawDots(); render(); drawTornado(tornadoData()); };
+  const mq = matchMedia("(prefers-color-scheme: dark)");
+  mq.addEventListener && mq.addEventListener("change", redrawAll);
+  new MutationObserver(redrawAll).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+})();
+</script>
